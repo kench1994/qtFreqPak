@@ -1,3 +1,4 @@
 ### webEngine contact with qml
 
-### it's some difficult to implement few mehtod cause of qml can not use jquery 
+##  Preview
+![enter image description here](https://github.com/kench1994/qtFreqPak/blob/master/20171224103041.png)

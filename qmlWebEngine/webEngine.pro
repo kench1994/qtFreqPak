@@ -4,6 +4,7 @@ QT += webengine
 
 SOURCES += main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    qml.qrc
 
 INSTALLS += target

@@ -40,9 +40,10 @@
 
 import QtQuick 2.0
 import QtQuick.Window 2.0
-import QtWebEngine 1.0
+import QtWebEngine 1.3
 
 Window {
+    id: mainWindow
     width: 640
     height: 480
     visible: true
@@ -50,28 +51,38 @@ Window {
     WebEngineView {
         id: webEngine
         anchors.fill: parent
-        url: "https://plogin.m.jd.com/user/login.action?appid=?"
-        property string username: "18965801936"
-        property var password: "18965801936"
-        onLoadingChanged: {
+        url:  'https://plogin.m.jd.com/user/login.action?appid=?'
+//        settings.javascriptCanAccessClipboard: true
+//        settings.javascriptCanOpenWindows : true
+//        settings.javascriptEnabled: true
+//        settings.pluginsEnabled: true
+//        settings.autoLoadImages: true
+        property string user: "your username here"
+        property string token: "your password here"
+       onLoadingChanged: {
             switch(loadRequest.status){
                 case WebEngineLoadRequest.LoadSucceededStatus:{
-                    webEngine.
-                    runJavaScript(
-                    'document.getElementById("username").value = ' + passValue(username),
-                    'document.getElementById("password").value = ' + passValue(password),
-                    'document.getElementById("loginbtn").click()'
-                    );
-
+                    autoFill("username", user)
+                    autoFill("password", token)
+                    autoLogin("loginBtn")
                 }
             }
 
         }
-        onUrlChanged: {
+        function autoFill(index,value){
+            var queryStr = 'document.getElementById("' + index + '").value = ' + '"' + value + '"'
+            console.log(queryStr)
+            webEngine.runJavaScript(queryStr, function(result) { console.log(result); })
+        }
+        function autoLogin(btnName){
+            var queryStr = 'var obj = document.getElementById("' + btnName + '")'
+            console.log(queryStr)
+            webEngine.runJavaScript(queryStr, function(result) { console.log(result); })
+            queryStr = 'obj.className += " btn-active";'
+            console.log(queryStr)
+            webEngine.runJavaScript(queryStr, function(result) { console.log(result); })
+            webEngine.runJavaScript('$("#loginBtn").click()')
+        }
 
-        }
-        function passValue(input){
-            return input;
-        }
     }
 }
